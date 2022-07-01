@@ -41,7 +41,7 @@ public class CustomerController {
     }
     
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<Customer> createNewAccountType(@Valid @RequestBody CustomerDto customerDto){
+    public ResponseEntity<Customer> createNewAccount(@Valid @RequestBody CustomerDto customerDto){
 
         var customer = customerService.customerRegister(customerDto);
 
@@ -51,7 +51,7 @@ public class CustomerController {
     
 	@PutMapping(value = "/{customerId}",
 			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-	public ResponseEntity<Void> deregisterCustomer(@PathVariable("accountId") Long customerId){
+	public ResponseEntity<Void> deregisterCustomer(@PathVariable("customerId") Long customerId){
 		customerService.deregisterCustomerById(customerId);
 		return ResponseEntity.noContent().build();
 	}

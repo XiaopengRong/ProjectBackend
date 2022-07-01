@@ -39,11 +39,11 @@ public class CustomerDto {
     private String email;
     
     @NotBlank(message = "first name is mandatory")
-    @Size(min = 5, max = 25, message = "State must consist of between 2 to 20 characters.")
+    @Size(min = 2, max = 25, message = "State must consist of between 2 to 20 characters.")
     private String first_name;
 
     @NotBlank(message = "last name is mandatory")
-    @Size(min = 5, max = 25, message = "State must consist of between 2 to 20 characters.")
+    @Size(min = 2, max = 25, message = "State must consist of between 2 to 20 characters.")
     private String last_name;
 
     private int register;
