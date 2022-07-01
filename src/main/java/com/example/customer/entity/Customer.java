@@ -5,11 +5,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
+import javax.persistence.*;
 
 
 @Entity
@@ -40,7 +46,11 @@ public class Customer {
 	    private Integer zip;
 	    
 	    private Long phone;
-
+        
+	    @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
+	    @OnDelete(action = OnDeleteAction.CASCADE)
+	    private List<Dependent> dependent;
+	    
 
 	
 	
