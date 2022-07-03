@@ -16,10 +16,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.customer.dto.CustomerDto;
+import com.example.customer.dto.DependentDto;
 import com.example.customer.entity.Customer;
+import com.example.customer.entity.Dependent;
 import com.example.customer.service.CustomerService;
 
 import org.springframework.web.bind.annotation.*;
+
 
 @Slf4j
 @RestController
@@ -28,7 +31,7 @@ import org.springframework.web.bind.annotation.*;
 public class CustomerController {
 	public static final String MAPPING = EndpointConstants.API_V_0_1_CUSTOMERS;
 	private final CustomerService customerService;
-
+    
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<List<Customer>> getAllCustomers(@RequestParam(defaultValue = "0") Integer pageNo,
 			@RequestParam(defaultValue = "10") Integer pageSize,
@@ -40,7 +43,8 @@ public class CustomerController {
         return ResponseEntity.ok(customers);
     }
     
-    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @PostMapping(value = "/register",consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
+    ,produces = {MediaType.APPLICATION_JSON_VALUE,})
     public ResponseEntity<Customer> createNewAccount(@Valid @RequestBody CustomerDto customerDto){
 
         var customer = customerService.customerRegister(customerDto);
@@ -56,6 +60,15 @@ public class CustomerController {
 		return ResponseEntity.noContent().build();
 	}
     
+    @PostMapping(value = "/addDependent",consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
+    ,produces = {MediaType.APPLICATION_JSON_VALUE,})
+    public ResponseEntity<Dependent> addDependent(@Valid @RequestBody DependentDto dependentDto){
+
+        var dependent = customerService.addDependent(dependentDto);
+
+        var uri = URI.create(MAPPING+"/"+dependent.getId());
+        return ResponseEntity.created(uri).body(dependent);
+    }
  
 	
 }

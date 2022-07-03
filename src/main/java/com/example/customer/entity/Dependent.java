@@ -4,6 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import java.util.Optional;
+
 import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
@@ -24,6 +27,8 @@ public class Dependent {
 	private String first_name;
 
 	private String last_name;
+	
+	private Long parentId;
 	
 	private int age;
 	

@@ -2,6 +2,8 @@ package com.example.customer.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import javax.validation.Validation;
 import javax.validation.Validator;
 
@@ -15,11 +17,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.customer.dto.CustomerDto;
+import com.example.customer.dto.DependentDto;
 import com.example.customer.entity.Customer;
+import com.example.customer.entity.Dependent;
 import com.example.customer.exception.DuplicateEmailException;
 import com.example.customer.exception.DuplicateuserNameException;
 import com.example.customer.exception.NoSuchAccountException;
 import com.example.customer.repository.CustomerRepository;
+import com.example.customer.repository.DependentRepository;
 
 
 @Slf4j
@@ -28,6 +33,7 @@ import com.example.customer.repository.CustomerRepository;
 public class CustomerServiceImpl implements CustomerService {
 	
 	private final CustomerRepository customerRepository;
+	private final DependentRepository dependentRepository;
 	private final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 	
 
@@ -91,5 +97,21 @@ public class CustomerServiceImpl implements CustomerService {
 	            throw new IllegalArgumentException("Invalid DTO " + customerDto);
 	        }
 	    }
+
+	@Override
+	public Dependent addDependent(DependentDto dependentDto) {
+		if(customerRepository.findById(dependentDto.getParentId())==null) {
+			throw new NoSuchAccountException(dependentDto.getParentId());
+		}
+		
+		Customer customer = customerRepository.findById(dependentDto.getParentId()).orElse(null);
+		Dependent dependent= Dependent.builder().age(dependentDto.getAge())
+				.first_name(dependentDto.getFirst_name()).last_name(dependentDto.getLast_name())
+				.customer(customer)
+				.parentId(dependentDto.getParentId()).build();
+		return dependentRepository.save(dependent);
+		
+		
+	}
 
 }
