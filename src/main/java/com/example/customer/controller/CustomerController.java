@@ -34,7 +34,7 @@ public class CustomerController {
     
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<List<Customer>> getAllCustomers(@RequestParam(defaultValue = "0") Integer pageNo,
-			@RequestParam(defaultValue = "10") Integer pageSize,
+			@RequestParam(defaultValue = "50") Integer pageSize,
 			@RequestParam(defaultValue = "id") String sortBy) {
         List<Customer> customers = customerService.getAllCustomer(pageNo, pageSize, sortBy);
         if (customers.isEmpty()) {
