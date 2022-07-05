@@ -43,10 +43,11 @@ public class CustomerController {
         return ResponseEntity.ok(customers);
     }
     
-    @PostMapping(value = "/register",consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
+    @PostMapping(value = "/register",consumes = {MediaType.APPLICATION_JSON_VALUE}
     ,produces = {MediaType.APPLICATION_JSON_VALUE,})
     public ResponseEntity<Customer> createNewAccount(@Valid @RequestBody CustomerDto customerDto){
-
+        System.out.println("############################################");
+        System.out.print("connected ");
         var customer = customerService.customerRegister(customerDto);
 
         var uri = URI.create(MAPPING+"/"+customer.getId());
