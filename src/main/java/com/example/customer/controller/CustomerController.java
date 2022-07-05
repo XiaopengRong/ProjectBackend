@@ -43,25 +43,33 @@ public class CustomerController {
         return ResponseEntity.ok(customers);
     }
     
+    
+    @GetMapping(value = "/{customerId}",produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    public ResponseEntity<Customer> getCustomers(@PathVariable("customerId") Long customerId) {
+         Customer customers = customerService.findCustomer(customerId);
+        if (customers.equals(null)) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(customers);
+    }
+    
     @PostMapping(value = "/register",consumes = {MediaType.APPLICATION_JSON_VALUE}
     ,produces = {MediaType.APPLICATION_JSON_VALUE,})
     public ResponseEntity<Customer> createNewAccount(@Valid @RequestBody CustomerDto customerDto){
-        System.out.println("############################################");
-        System.out.print("connected ");
         var customer = customerService.customerRegister(customerDto);
 
         var uri = URI.create(MAPPING+"/"+customer.getId());
         return ResponseEntity.created(uri).body(customer);
     }
     
-	@PutMapping(value = "/{customerId}",
+	@PostMapping(value = "/{customerId}",
 			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<Void> deregisterCustomer(@PathVariable("customerId") Long customerId){
 		customerService.deregisterCustomerById(customerId);
 		return ResponseEntity.noContent().build();
 	}
     
-    @PostMapping(value = "/addDependent",consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
+    @PostMapping(value = "/adddependent",consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
     ,produces = {MediaType.APPLICATION_JSON_VALUE,})
     public ResponseEntity<Dependent> addDependent(@Valid @RequestBody DependentDto dependentDto){
 

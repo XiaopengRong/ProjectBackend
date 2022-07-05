@@ -107,11 +107,18 @@ public class CustomerServiceImpl implements CustomerService {
 		Customer customer = customerRepository.findById(dependentDto.getParentId()).orElse(null);
 		Dependent dependent= Dependent.builder().age(dependentDto.getAge())
 				.first_name(dependentDto.getFirst_name()).last_name(dependentDto.getLast_name())
+			    .parentId(dependentDto.getParentId())
 				.customer(customer)
-				.parentId(dependentDto.getParentId()).build();
+			.build();
 		return dependentRepository.save(dependent);
 		
 		
+	}
+
+	@Override
+	public Customer findCustomer(Long id) {
+		
+		return customerRepository.findById(id).orElse(null);
 	}
 
 }

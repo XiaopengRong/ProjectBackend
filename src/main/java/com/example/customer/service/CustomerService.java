@@ -13,6 +13,8 @@ public interface CustomerService {
 	Customer customerRegister(CustomerDto customerDto);
 	void deregisterCustomerById(Long id);
 	Dependent addDependent(DependentDto dependentDto);
+	Customer findCustomer(Long id);
+
 	
 
 }

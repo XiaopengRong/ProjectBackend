@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class DependentDto {
 	
-	@Null
+
 	private Long parentId;
 	
     @NotBlank(message = "first name is mandatory")
@@ -29,7 +29,7 @@ public class DependentDto {
     @Size(min = 2, max = 25, message = "State must consist of between 2 to 20 characters.")
 	private String last_name;
 	
-	@Null
+	
 	private int age;
 
 }

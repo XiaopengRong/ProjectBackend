@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -49,6 +51,7 @@ public class Customer {
         
 	    @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
 	    @OnDelete(action = OnDeleteAction.CASCADE)
+	    @JsonManagedReference
 	    private List<Dependent> dependent;
 	    
 

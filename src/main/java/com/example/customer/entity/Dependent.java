@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.util.Optional;
 
 import javax.persistence.*;
@@ -34,6 +36,7 @@ public class Dependent {
 	
 	@ManyToOne
 	@JoinColumn(name = "customer_id")
+	@JsonBackReference
 	private Customer customer;
 
 }
